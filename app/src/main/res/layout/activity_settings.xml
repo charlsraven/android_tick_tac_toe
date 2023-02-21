@@ -96,7 +96,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <ImageView
-            android:id="@+id/perv_lvl"
+            android:id="@+id/prev_lvl"
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:layout_marginStart="32dp"
