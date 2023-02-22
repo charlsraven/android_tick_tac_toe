@@ -12,4 +12,7 @@
         <item>NORMAL</item>
         <item>HARD</item>
     </string-array>
+    <string name="dialog_status_win">You win!</string>
+    <string name="dialog_status_lose">You lose!</string>
+    <string name="dialog_status_draw">It\'s a draw!</string>
 </resources>
