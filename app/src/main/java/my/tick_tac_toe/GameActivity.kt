@@ -4,7 +4,9 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.SystemClock
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -14,6 +16,8 @@ import my.tick_tac_toe.databinding.ActivityGameBinding
 class GameActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
     private lateinit var gameField: Array<Array<String>>
+    private lateinit var settingsInfo: SettingsActivity.SettingsInfo
+    private lateinit var mediaPlayer: MediaPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
@@ -51,7 +55,32 @@ class GameActivity : AppCompatActivity() {
             makeStepOfUser(3, 3)
         }
         setContentView(binding.root)
-        initGameField()
+        val time = intent.getLongExtra(MainActivity.EXTRA_TIME, 0)
+        val gameField = intent.getStringExtra(MainActivity.EXTRA_GAME_FIELD)
+        if (time != 0L && gameField != null && gameField != "")
+            restartGame(time, gameField)
+        else
+            initGameField()
+        settingsInfo = getSettingsInfo()
+        mediaPlayer = MediaPlayer.create(this, R.raw.test)
+        mediaPlayer.isLooping = true
+        setVolumeMediaPlayer(settingsInfo.soundValue)
+        mediaPlayer.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer.release()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mediaPlayer.release()
+    }
+
+    private fun setVolumeMediaPlayer(soundValue: Int) {
+        val volume = soundValue / 100.0
+        mediaPlayer.setVolume(volume.toFloat(), volume.toFloat())
     }
 
     private fun initGameField() {
@@ -86,18 +115,18 @@ class GameActivity : AppCompatActivity() {
         if (isEmptyField(row, column)) {
             makeStep(row, column, "X")
             val status = checkGameField(row, column, "X")
-            if(status.status){
+            if (status.status) {
                 showGameStatus(STATUS_PLAYER_WIN)
                 return
             }
-            if(!isFilledGameField()) {
+            if (!isFilledGameField()) {
                 makeStepOfAI()
                 val statusAI = checkGameField(row, column, "0")
-                if(statusAI.status){
+                if (statusAI.status) {
                     showGameStatus(STATUS_PLAYER_LOSE)
                     return
                 }
-                if(isFilledGameField()) {
+                if (isFilledGameField()) {
                     showGameStatus(STATUS_PLAYER_DRAW)
                     return
                 }
@@ -114,6 +143,15 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun makeStepOfAI() {
+        when (settingsInfo.lvl) {
+            0 -> makeStepOfAIEasyLvl()
+            1 -> makeStepOfAIMediumLvl()
+            2 -> makeStepOfAIHardLvl()
+        }
+
+    }
+
+    private fun makeStepOfAIEasyLvl() {
         var randRow = 0
         var randColumn = 0
         do {
@@ -123,12 +161,20 @@ class GameActivity : AppCompatActivity() {
         makeStep(randRow, randColumn, "0")
     }
 
+    private fun makeStepOfAIMediumLvl() {
+        TODO("Not yet implemented")
+    }
+
+    private fun makeStepOfAIHardLvl() {
+        TODO("Not yet implemented")
+    }
+
     private fun checkGameField(row: Int, column: Int, symbol: String): StatusInfo {
         var row = 0
         var column = 0
         var leftDiagonal = 0
         var rightDiagonal = 0
-        var n = gameField.size
+        val n = gameField.size
         for (i in 0..2) {
             if (gameField[row][i] == symbol)
                 column++
@@ -139,10 +185,51 @@ class GameActivity : AppCompatActivity() {
             else if (gameField[i][n - i - 1] == symbol)
                 rightDiagonal++
         }
-        return if (row == n || column == n || leftDiagonal == n || rightDiagonal == n)
-            StatusInfo(true, symbol)
-        else
-            StatusInfo(false, "")
+        return when (settingsInfo.rules) {
+            1 -> {
+                return if (column == n)
+                    StatusInfo(true, symbol)
+                else
+                    StatusInfo(false, "")
+            }
+            2 -> {
+                return if (row == n)
+                    StatusInfo(true, symbol)
+                else
+                    StatusInfo(false, "")
+            }
+            3 -> {
+                return if (row == n || column == n)
+                    StatusInfo(true, symbol)
+                else
+                    StatusInfo(false, "")
+            }
+            4 -> {
+                return if (leftDiagonal == n || rightDiagonal == n)
+                    StatusInfo(true, symbol)
+                else
+                    StatusInfo(false, "")
+            }
+            5 -> {
+                return if (column == n || leftDiagonal == n || rightDiagonal == n)
+                    StatusInfo(true, symbol)
+                else
+                    StatusInfo(false, "")
+            }
+            6 -> {
+                return if (row == n || leftDiagonal == n || rightDiagonal == n)
+                    StatusInfo(true, symbol)
+                else
+                    StatusInfo(false, "")
+            }
+            7 -> {
+                return if (row == n || column == n || leftDiagonal == n || rightDiagonal == n)
+                    StatusInfo(true, symbol)
+                else
+                    StatusInfo(false, "")
+            }
+            else -> StatusInfo(false, "")
+        }
     }
 
     data class StatusInfo(val status: Boolean, val side: String)
@@ -194,8 +281,12 @@ class GameActivity : AppCompatActivity() {
             dialog.hide()
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
+            setVolumeMediaPlayer(settingsInfo.soundValue)
         }
         toExit.setOnClickListener {
+            val elapsedTime = SystemClock.elapsedRealtime() - binding.chronometer.base
+            val stringGameField = convertGameFieldToString(gameField)
+            saveGame(elapsedTime, stringGameField)
             dialog.dismiss()
             onBackPressed()
         }
@@ -210,10 +301,50 @@ class GameActivity : AppCompatActivity() {
         return true
     }
 
+    private fun convertGameFieldToString(gameField: Array<Array<String>>): String {
+        val tempArray = arrayListOf<String>()
+        gameField.forEach { tempArray.add(it.joinToString(";")) }
+        return tempArray.joinToString("\n")
+    }
+
+    private fun saveGame(time: Long, gameField: String) {
+        with(getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit()) {
+            putLong(PREF_TIME, time)
+            putString(PREF_GAME_FIELD, gameField)
+            apply()
+        }
+    }
+
+    private fun restartGame(time: Long, gameField: String) {
+        binding.chronometer.base = SystemClock.elapsedRealtime() - time
+        this.gameField = arrayOf()
+        val rows = gameField.split("\n")
+        rows.forEach {
+            val columns = it.split(";")
+            this.gameField += columns.toTypedArray()
+        }
+        this.gameField.forEachIndexed { indexRow, strings ->
+            strings.forEachIndexed { indexColumn, s ->
+                makeStep(indexRow, indexColumn, this.gameField[indexRow][indexColumn])
+            }
+        }
+    }
+
+    private fun getSettingsInfo(): SettingsActivity.SettingsInfo {
+        with(getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)) {
+            val soundValue = getInt(SettingsActivity.PREF_SOUND_VALUE, 0)
+            val lvl = getInt(SettingsActivity.PREF_LVL, 0)
+            val rules = getInt(SettingsActivity.PREF_RULES, 0)
+            return SettingsActivity.SettingsInfo(soundValue, lvl, rules)
+        }
+    }
+
     companion object {
         const val STATUS_PLAYER_WIN = 1
         const val STATUS_PLAYER_LOSE = 2
         const val STATUS_PLAYER_DRAW = 3
+        const val PREF_TIME = "pref_time"
+        const val PREF_GAME_FIELD = "pref_game_field"
     }
 
 }
