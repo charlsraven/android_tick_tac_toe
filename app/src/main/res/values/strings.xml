@@ -7,4 +7,9 @@
     <string name="dialog_settings">Settings</string>
     <string name="dialog_exit">Save and Quit</string>
     <string name="preference_file_key">my.tic_tac_toe.file_key</string>
+    <string-array name="game_level">
+        <item>SIMPLE</item>
+        <item>NORMAL</item>
+        <item>HARD</item>
+    </string-array>
 </resources>
