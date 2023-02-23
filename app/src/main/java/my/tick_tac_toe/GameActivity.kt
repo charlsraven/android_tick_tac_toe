@@ -27,14 +27,26 @@ class GameActivity : AppCompatActivity() {
         binding.toGameClose.setOnClickListener {
             onBackPressed()
         }
+        binding.cell00.setOnClickListener {
+            makeStepOfUser(0, 0)
+        }
+        binding.cell01.setOnClickListener {
+            makeStepOfUser(0, 1)
+        }
+        binding.cell02.setOnClickListener {
+            makeStepOfUser(0, 2)
+        }
+        binding.cell10.setOnClickListener {
+            makeStepOfUser(1, 0)
+        }
         binding.cell11.setOnClickListener {
             makeStepOfUser(1, 1)
         }
         binding.cell12.setOnClickListener {
             makeStepOfUser(1, 2)
         }
-        binding.cell13.setOnClickListener {
-            makeStepOfUser(1, 3)
+        binding.cell20.setOnClickListener {
+            makeStepOfUser(2, 0)
         }
         binding.cell21.setOnClickListener {
             makeStepOfUser(2, 1)
@@ -42,30 +54,17 @@ class GameActivity : AppCompatActivity() {
         binding.cell22.setOnClickListener {
             makeStepOfUser(2, 2)
         }
-        binding.cell23.setOnClickListener {
-            makeStepOfUser(2, 3)
-        }
-        binding.cell31.setOnClickListener {
-            makeStepOfUser(3, 1)
-        }
-        binding.cell32.setOnClickListener {
-            makeStepOfUser(3, 2)
-        }
-        binding.cell33.setOnClickListener {
-            makeStepOfUser(3, 3)
-        }
         setContentView(binding.root)
         val time = intent.getLongExtra(MainActivity.EXTRA_TIME, 0)
         val gameField = intent.getStringExtra(MainActivity.EXTRA_GAME_FIELD)
-        if (time != 0L && gameField != null && gameField != "")
-            restartGame(time, gameField)
-        else
-            initGameField()
+        if (time != 0L && gameField != null && gameField != "") restartGame(time, gameField)
+        else initGameField()
         settingsInfo = getSettingsInfo()
         mediaPlayer = MediaPlayer.create(this, R.raw.test)
         mediaPlayer.isLooping = true
         setVolumeMediaPlayer(settingsInfo.soundValue)
         mediaPlayer.start()
+        binding.chronometer.start()
     }
 
     override fun onDestroy() {
@@ -99,15 +98,15 @@ class GameActivity : AppCompatActivity() {
             else -> return
         }
         when (position) {
+            "00" -> binding.cell00.setImageResource(resId)
+            "01" -> binding.cell01.setImageResource(resId)
+            "02" -> binding.cell02.setImageResource(resId)
+            "10" -> binding.cell10.setImageResource(resId)
             "11" -> binding.cell11.setImageResource(resId)
             "12" -> binding.cell12.setImageResource(resId)
-            "13" -> binding.cell13.setImageResource(resId)
+            "20" -> binding.cell20.setImageResource(resId)
             "21" -> binding.cell21.setImageResource(resId)
             "22" -> binding.cell22.setImageResource(resId)
-            "23" -> binding.cell23.setImageResource(resId)
-            "31" -> binding.cell31.setImageResource(resId)
-            "32" -> binding.cell32.setImageResource(resId)
-            "33" -> binding.cell33.setImageResource(resId)
         }
     }
 
@@ -134,8 +133,7 @@ class GameActivity : AppCompatActivity() {
                 showGameStatus(STATUS_PLAYER_DRAW)
                 return
             }
-        } else
-            Toast.makeText(this, "This field is already filled", Toast.LENGTH_SHORT).show()
+        } else Toast.makeText(this, "This field is already filled", Toast.LENGTH_SHORT).show()
     }
 
     private fun isEmptyField(row: Int, column: Int): Boolean {
@@ -169,64 +167,55 @@ class GameActivity : AppCompatActivity() {
         TODO("Not yet implemented")
     }
 
-    private fun checkGameField(row: Int, column: Int, symbol: String): StatusInfo {
+    private fun checkGameField(x: Int, y: Int, symbol: String): StatusInfo {
         var row = 0
         var column = 0
         var leftDiagonal = 0
         var rightDiagonal = 0
         val n = gameField.size
         for (i in 0..2) {
-            if (gameField[row][i] == symbol)
-                column++
-            else if (gameField[i][column] == symbol)
-                row++
-            else if (gameField[i][i] == symbol)
-                leftDiagonal++
-            else if (gameField[i][n - i - 1] == symbol)
-                rightDiagonal++
+            if (gameField[x][i] == symbol) column++
+            if (gameField[i][y] == symbol) row++
+            if (gameField[i][i] == symbol) leftDiagonal++
+            if (gameField[i][n - i - 1] == symbol) rightDiagonal++
         }
         return when (settingsInfo.rules) {
             1 -> {
-                return if (column == n)
-                    StatusInfo(true, symbol)
-                else
-                    StatusInfo(false, "")
+                return if (column == n) StatusInfo(true, symbol)
+                else StatusInfo(false, "")
             }
             2 -> {
-                return if (row == n)
-                    StatusInfo(true, symbol)
-                else
-                    StatusInfo(false, "")
+                return if (row == n) StatusInfo(true, symbol)
+                else StatusInfo(false, "")
             }
             3 -> {
-                return if (row == n || column == n)
-                    StatusInfo(true, symbol)
-                else
-                    StatusInfo(false, "")
+                return if (row == n || column == n) StatusInfo(true, symbol)
+                else StatusInfo(false, "")
             }
             4 -> {
-                return if (leftDiagonal == n || rightDiagonal == n)
-                    StatusInfo(true, symbol)
-                else
-                    StatusInfo(false, "")
+                return if (leftDiagonal == n || rightDiagonal == n) StatusInfo(true, symbol)
+                else StatusInfo(false, "")
             }
             5 -> {
-                return if (column == n || leftDiagonal == n || rightDiagonal == n)
-                    StatusInfo(true, symbol)
-                else
-                    StatusInfo(false, "")
+                return if (column == n || leftDiagonal == n || rightDiagonal == n) StatusInfo(
+                    true,
+                    symbol
+                )
+                else StatusInfo(false, "")
             }
             6 -> {
-                return if (row == n || leftDiagonal == n || rightDiagonal == n)
-                    StatusInfo(true, symbol)
-                else
-                    StatusInfo(false, "")
+                return if (row == n || leftDiagonal == n || rightDiagonal == n) StatusInfo(
+                    true,
+                    symbol
+                )
+                else StatusInfo(false, "")
             }
             7 -> {
-                return if (row == n || column == n || leftDiagonal == n || rightDiagonal == n)
-                    StatusInfo(true, symbol)
-                else
-                    StatusInfo(false, "")
+                return if (row == n || column == n || leftDiagonal == n || rightDiagonal == n) StatusInfo(
+                    true,
+                    symbol
+                )
+                else StatusInfo(false, "")
             }
             else -> StatusInfo(false, "")
         }
@@ -280,8 +269,7 @@ class GameActivity : AppCompatActivity() {
         toSettings.setOnClickListener {
             dialog.hide()
             val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
-            setVolumeMediaPlayer(settingsInfo.soundValue)
+            startActivityForResult(intent, REQUEST_POPUP_MENU)
         }
         toExit.setOnClickListener {
             val elapsedTime = SystemClock.elapsedRealtime() - binding.chronometer.base
@@ -293,10 +281,22 @@ class GameActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_POPUP_MENU) {
+            if (resultCode == RESULT_OK) {
+                settingsInfo = getSettingsInfo()
+                mediaPlayer = MediaPlayer.create(this, R.raw.test)
+                mediaPlayer.isLooping = true
+                setVolumeMediaPlayer(settingsInfo.soundValue)
+                mediaPlayer.start()
+            }
+        } else
+            super.onActivityResult(requestCode, resultCode, data)
+    }
+
     private fun isFilledGameField(): Boolean {
         gameField.forEach { strings ->
-            if (strings.find { it == " " } != null)
-                return false
+            if (strings.find { it == " " } != null) return false
         }
         return true
     }
@@ -332,9 +332,9 @@ class GameActivity : AppCompatActivity() {
 
     private fun getSettingsInfo(): SettingsActivity.SettingsInfo {
         with(getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)) {
-            val soundValue = getInt(SettingsActivity.PREF_SOUND_VALUE, 0)
+            val soundValue = getInt(SettingsActivity.PREF_SOUND_VALUE, 50)
             val lvl = getInt(SettingsActivity.PREF_LVL, 0)
-            val rules = getInt(SettingsActivity.PREF_RULES, 0)
+            val rules = getInt(SettingsActivity.PREF_RULES, 7)
             return SettingsActivity.SettingsInfo(soundValue, lvl, rules)
         }
     }
@@ -345,6 +345,7 @@ class GameActivity : AppCompatActivity() {
         const val STATUS_PLAYER_DRAW = 3
         const val PREF_TIME = "pref_time"
         const val PREF_GAME_FIELD = "pref_game_field"
+        const val REQUEST_POPUP_MENU = 123
     }
 
 }

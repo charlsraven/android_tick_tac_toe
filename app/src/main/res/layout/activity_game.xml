@@ -62,108 +62,109 @@
         app:layout_constraintTop_toBottomOf="@+id/toGameClose">
 
         <ImageView
-            android:id="@+id/cell_11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/cell_00"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
             android:layout_marginStart="1dp"
             android:layout_marginTop="1dp"
             android:background="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_cross" />
+            tools:srcCompat="@drawable/ic_cross" />
+
 
         <ImageView
-            android:id="@+id/cell_33"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/cell_01"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/cell_02"
+            app:layout_constraintStart_toEndOf="@+id/cell_00"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_cross" />
+
+        <ImageView
+            android:id="@+id/cell_02"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
             android:layout_marginTop="1dp"
             android:layout_marginEnd="1dp"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cell_23"
-            app:srcCompat="@drawable/ic_cross" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_cross" />
+
+        <ImageView
+            android:id="@+id/cell_10"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cell_00"
+            tools:srcCompat="@drawable/ic_cross" />
+
+        <ImageView
+            android:id="@+id/cell_11"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/cell_12"
+            app:layout_constraintStart_toEndOf="@+id/cell_10"
+            app:layout_constraintTop_toBottomOf="@+id/cell_01"
+            tools:srcCompat="@drawable/ic_cross" />
 
         <ImageView
             android:id="@+id/cell_12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="1dp"
-            android:background="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/cell_13"
-            app:layout_constraintStart_toEndOf="@+id/cell_11"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_cross" />
-
-        <ImageView
-            android:id="@+id/cell_13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
             android:layout_marginTop="1dp"
             android:layout_marginEnd="1dp"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_cross" />
+            app:layout_constraintTop_toBottomOf="@+id/cell_02"
+            tools:srcCompat="@drawable/ic_cross" />
+
+        <ImageView
+            android:id="@+id/cell_20"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cell_10"
+            tools:srcCompat="@drawable/ic_cross" />
 
         <ImageView
             android:id="@+id/cell_21"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="1dp"
-            android:background="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cell_11"
-            app:srcCompat="@drawable/ic_cross" />
-
-        <ImageView
-            android:id="@+id/cell_22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
             android:layout_marginStart="1dp"
             android:layout_marginTop="1dp"
             android:layout_marginEnd="1dp"
             android:background="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/cell_23"
-            app:layout_constraintStart_toEndOf="@+id/cell_21"
-            app:layout_constraintTop_toBottomOf="@+id/cell_12"
-            app:srcCompat="@drawable/ic_cross" />
+            app:layout_constraintEnd_toStartOf="@+id/cell_22"
+            app:layout_constraintStart_toEndOf="@+id/cell_20"
+            app:layout_constraintTop_toBottomOf="@+id/cell_11"
+            tools:srcCompat="@drawable/ic_cross" />
 
         <ImageView
-            android:id="@+id/cell_23"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/cell_22"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
             android:layout_marginTop="1dp"
             android:layout_marginEnd="1dp"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cell_13"
-            app:srcCompat="@drawable/ic_cross" />
-
-        <ImageView
-            android:id="@+id/cell_31"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="1dp"
-            android:background="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cell_21"
-            app:srcCompat="@drawable/ic_cross" />
-
-        <ImageView
-            android:id="@+id/cell_32"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="1dp"
-            android:background="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/cell_33"
-            app:layout_constraintStart_toEndOf="@+id/cell_31"
-            app:layout_constraintTop_toBottomOf="@+id/cell_22"
-            app:srcCompat="@drawable/ic_cross" />
+            app:layout_constraintTop_toBottomOf="@+id/cell_12"
+            tools:srcCompat="@drawable/ic_cross" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

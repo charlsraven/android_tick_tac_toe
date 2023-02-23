@@ -123,7 +123,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="32dp"
             android:button="@drawable/style_checkbox"
-            android:checked="true"
+            android:checked="false"
             android:fontFamily="@font/roboto_medium"
             android:paddingLeft="8dp"
             android:text="Vertical Row"
@@ -157,18 +157,15 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="46dp"
             android:button="@drawable/style_checkbox"
             android:fontFamily="@font/roboto_medium"
             android:paddingLeft="8dp"
             android:text="Diagonal Row"
             android:textColor="@color/brown"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/toBack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox_horizontal"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBox_horizontal" />
 
         <TextView
             android:id="@+id/toBack"
@@ -176,14 +173,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
             android:text="Back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox_diagonal" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

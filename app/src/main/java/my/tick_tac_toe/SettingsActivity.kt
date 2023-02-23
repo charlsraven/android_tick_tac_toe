@@ -42,27 +42,24 @@ class SettingsActivity : AppCompatActivity() {
                 binding.checkBoxDiagonal.isChecked = true
             }
         }
-        if (currentLvl == 0)
-            binding.prevLvl.visibility = View.INVISIBLE
-        else if (currentLvl == 2)
-            binding.nextLvl.visibility = View.INVISIBLE
+        if (currentLvl == 0) binding.prevLvl.visibility = View.INVISIBLE
+        else if (currentLvl == 2) binding.nextLvl.visibility = View.INVISIBLE
         binding.infoLevel.text = resources.getStringArray(R.array.game_level)[currentLvl]
         binding.soundBar.progress = currentSoundValue
+        binding.toBack.setOnClickListener {
+            onBackPressed()
+        }
         binding.prevLvl.setOnClickListener {
             currentLvl--
-            if (currentLvl == 0)
-                binding.prevLvl.visibility = View.INVISIBLE
-            else if (currentLvl == 1)
-                binding.nextLvl.visibility = View.VISIBLE
+            if (currentLvl == 0) binding.prevLvl.visibility = View.INVISIBLE
+            else if (currentLvl == 1) binding.nextLvl.visibility = View.VISIBLE
             binding.infoLevel.text = resources.getStringArray(R.array.game_level)[currentLvl]
             updateLvl(currentLvl)
         }
         binding.nextLvl.setOnClickListener {
             currentLvl++
-            if (currentLvl == 1)
-                binding.prevLvl.visibility = View.VISIBLE
-            else if (currentLvl == 2)
-                binding.nextLvl.visibility = View.INVISIBLE
+            if (currentLvl == 1) binding.prevLvl.visibility = View.VISIBLE
+            else if (currentLvl == 2) binding.nextLvl.visibility = View.INVISIBLE
             binding.infoLevel.text = resources.getStringArray(R.array.game_level)[currentLvl]
             updateLvl(currentLvl)
         }
@@ -80,25 +77,19 @@ class SettingsActivity : AppCompatActivity() {
             }
         })
         binding.checkBoxVertical.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked)
-                currentRules++
-            else
-                currentRules--
+            if (isChecked) currentRules++
+            else currentRules--
 
             updateRules(currentRules)
         }
         binding.checkBoxHorizontal.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked)
-                currentRules += 2
-            else
-                currentRules -= 2
+            if (isChecked) currentRules += 2
+            else currentRules -= 2
             updateRules(currentRules)
         }
         binding.checkBoxDiagonal.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked)
-                currentRules += 4
-            else
-                currentRules -= 4
+            if (isChecked) currentRules += 4
+            else currentRules -= 4
             updateRules(currentRules)
         }
         setContentView(binding.root)
@@ -109,6 +100,7 @@ class SettingsActivity : AppCompatActivity() {
             putInt(PREF_SOUND_VALUE, value)
             apply()
         }
+        setResult(RESULT_OK)
     }
 
     private fun updateLvl(lvl: Int) {
@@ -116,6 +108,7 @@ class SettingsActivity : AppCompatActivity() {
             putInt(PREF_LVL, lvl)
             apply()
         }
+        setResult(RESULT_OK)
     }
 
     private fun updateRules(rules: Int) {
@@ -123,13 +116,14 @@ class SettingsActivity : AppCompatActivity() {
             putInt(PREF_RULES, rules)
             apply()
         }
+        setResult(RESULT_OK)
     }
 
     private fun getSettingsInfo(): SettingsInfo {
         with(getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)) {
-            val soundValue = getInt(PREF_SOUND_VALUE, 0)
+            val soundValue = getInt(PREF_SOUND_VALUE, 50)
             val lvl = getInt(PREF_LVL, 0)
-            val rules = getInt(PREF_RULES, 0)
+            val rules = getInt(PREF_RULES, 7)
             return SettingsInfo(soundValue, lvl, rules)
         }
     }
