@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             return if (gameField != null)
                 InfoGame(time, gameField)
             else
-                InfoGame(0L, "");
+                InfoGame(0L, "")
         }
     }
 
