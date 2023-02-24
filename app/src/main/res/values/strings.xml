@@ -1,18 +1,27 @@
 <resources>
-    <string name="app_name">My Tick-Tac-Toe</string>
+    <string name="app_name">My Tic-Tac-Toe</string>
     <string name="title_new_game">New Game</string>
     <string name="title_continue_game">Continue game</string>
     <string name="title_settings">Settings</string>
     <string name="dialog_continue_game">Continue game</string>
     <string name="dialog_settings">Settings</string>
     <string name="dialog_exit">Save and Quit</string>
-    <string name="preference_file_key">my.tic_tac_toe.file_key</string>
+    <string name="settings_sound">Sound</string>
+    <string name="settings_difficulty">Difficulty</string>
+    <string name="settings_game_rules">Game Rules</string>
+    <string name="rules_vertical">Vertical Row</string>
+    <string name="rules_horizontal">Horizontal Row</string>
+    <string name="rules_diagonal">Diagonal Row</string>
+    <string name="settings_to_back">Back</string>
+    <string name="dialog_status_win">You win!</string>
+    <string name="dialog_status_lose">You lose!</string>
+    <string name="dialog_status_draw">It\'s a draw!</string>
+    <string name="popup_title">Menu</string>
+    <string name="popup_close" translatable="false">OK</string>
+    <string name="preference_file_key" translatable="false">my.tic_tac_toe.file_key</string>
     <string-array name="game_level">
         <item>SIMPLE</item>
         <item>NORMAL</item>
         <item>HARD</item>
     </string-array>
-    <string name="dialog_status_win">You win!</string>
-    <string name="dialog_status_lose">You lose!</string>
-    <string name="dialog_status_draw">It\'s a draw!</string>
 </resources>
