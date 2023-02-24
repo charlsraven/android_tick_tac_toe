@@ -16,10 +16,14 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
-        val data = getSettingsInfo()
-        currentSoundValue = data.soundValue
-        currentLvl = data.lvl
-        currentRules = data.rules
+        val currentSettings = getCurrentSettings()
+        currentSoundValue = currentSettings.soundValue
+        currentLvl = currentSettings.lvl
+        currentRules = currentSettings.rules
+        if (currentLvl == 0) binding.prevLvl.visibility = View.INVISIBLE
+        else if (currentLvl == 2) binding.nextLvl.visibility = View.INVISIBLE
+        binding.infoLevel.text = resources.getStringArray(R.array.game_level)[currentLvl]
+        binding.soundBar.progress = currentSoundValue
         when (currentRules) {
             1 -> binding.checkBoxVertical.isChecked = true
             2 -> binding.checkBoxHorizontal.isChecked = true
@@ -42,35 +46,26 @@ class SettingsActivity : AppCompatActivity() {
                 binding.checkBoxDiagonal.isChecked = true
             }
         }
-        if (currentLvl == 0) binding.prevLvl.visibility = View.INVISIBLE
-        else if (currentLvl == 2) binding.nextLvl.visibility = View.INVISIBLE
-        binding.infoLevel.text = resources.getStringArray(R.array.game_level)[currentLvl]
-        binding.soundBar.progress = currentSoundValue
-        binding.toBack.setOnClickListener {
-            onBackPressed()
-        }
         binding.prevLvl.setOnClickListener {
             currentLvl--
             if (currentLvl == 0) binding.prevLvl.visibility = View.INVISIBLE
             else if (currentLvl == 1) binding.nextLvl.visibility = View.VISIBLE
-            binding.infoLevel.text = resources.getStringArray(R.array.game_level)[currentLvl]
             updateLvl(currentLvl)
+            binding.infoLevel.text = resources.getStringArray(R.array.game_level)[currentLvl]
         }
         binding.nextLvl.setOnClickListener {
             currentLvl++
-            if (currentLvl == 1) binding.prevLvl.visibility = View.VISIBLE
-            else if (currentLvl == 2) binding.nextLvl.visibility = View.INVISIBLE
-            binding.infoLevel.text = resources.getStringArray(R.array.game_level)[currentLvl]
+            if (currentLvl == 2) binding.prevLvl.visibility = View.INVISIBLE
+            else if (currentLvl == 1) binding.nextLvl.visibility = View.VISIBLE
             updateLvl(currentLvl)
+            binding.infoLevel.text = resources.getStringArray(R.array.game_level)[currentLvl]
         }
         binding.soundBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, value: Int, p2: Boolean) {
                 currentSoundValue = value
             }
 
-            override fun onStartTrackingTouch(p0: SeekBar?) {
-
-            }
+            override fun onStartTrackingTouch(p0: SeekBar?) {}
 
             override fun onStopTrackingTouch(p0: SeekBar?) {
                 updateSoundValue(currentSoundValue)
@@ -79,7 +74,6 @@ class SettingsActivity : AppCompatActivity() {
         binding.checkBoxVertical.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) currentRules++
             else currentRules--
-
             updateRules(currentRules)
         }
         binding.checkBoxHorizontal.setOnCheckedChangeListener { _, isChecked ->
@@ -92,19 +86,23 @@ class SettingsActivity : AppCompatActivity() {
             else currentRules -= 4
             updateRules(currentRules)
         }
+        binding.toBack.setOnClickListener {
+            setResult(RESULT_OK)
+            onBackPressed()
+        }
         setContentView(binding.root)
     }
 
-    private fun updateSoundValue(value: Int) {
-        with(getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit()) {
-            putInt(PREF_SOUND_VALUE, value)
+    private fun updateSoundValue(volume: Int) {
+        getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit().apply() {
+            putInt(PREF_SOUND_VALUE, volume)
             apply()
         }
         setResult(RESULT_OK)
     }
 
     private fun updateLvl(lvl: Int) {
-        with(getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit()) {
+        getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit().apply() {
             putInt(PREF_LVL, lvl)
             apply()
         }
@@ -112,15 +110,15 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun updateRules(rules: Int) {
-        with(getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit()) {
+        getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit().apply() {
             putInt(PREF_RULES, rules)
             apply()
         }
         setResult(RESULT_OK)
     }
 
-    private fun getSettingsInfo(): SettingsInfo {
-        with(getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)) {
+    private fun getCurrentSettings(): SettingsInfo {
+        getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).apply {
             val soundValue = getInt(PREF_SOUND_VALUE, 50)
             val lvl = getInt(PREF_LVL, 0)
             val rules = getInt(PREF_RULES, 7)

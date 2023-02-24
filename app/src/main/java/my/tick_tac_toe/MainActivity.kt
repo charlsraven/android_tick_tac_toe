@@ -9,6 +9,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_MyTickTacToe)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.toNewGame.setOnClickListener {
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.toContinueGame.setOnClickListener {
-            val data = getInfoAboutGame()
+            val data = getInfoAboutLastGame()
             val intent = Intent(this, GameActivity::class.java).apply {
                 putExtra(EXTRA_TIME, data.time)
                 putExtra(EXTRA_GAME_FIELD, data.gameField)
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun getInfoAboutGame(): InfoGame {
+    private fun getInfoAboutLastGame(): InfoGame {
         with(getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)) {
             val time = getLong(GameActivity.PREF_TIME, 0L)
             val gameField = getString(GameActivity.PREF_GAME_FIELD, "")
