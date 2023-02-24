@@ -8,7 +8,6 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="256dp"
         android:layout_height="256dp"
         android:layout_marginStart="64dp"
@@ -17,7 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_logo_main" />
+        app:srcCompat="@drawable/ic_logo_main"
+        android:contentDescription="@string/logo" />
 
     <TextView
         android:id="@+id/toNewGame"

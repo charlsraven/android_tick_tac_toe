@@ -148,8 +148,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun makeStepOfAIEasyLvl(): CellGameField {
-        var randRow = 0
-        var randColumn = 0
+        var randRow: Int
+        var randColumn: Int
         do {
             randRow = (0..2).random()
             randColumn = (0..2).random()
@@ -184,12 +184,12 @@ class GameActivity : AppCompatActivity() {
         return move
     }
 
-    private fun minimax(board: Array<Array<String>>, isMaximizinig: Boolean): Double {
+    private fun minimax(board: Array<Array<String>>, isMaximizing: Boolean): Double {
         val result = checkWinner(board)
         result?.let {
             return scores[result]!!
         }
-        if (isMaximizinig) {
+        if (isMaximizing) {
             var bestScore = Double.NEGATIVE_INFINITY
             board.forEachIndexed { indexRows, columns ->
                 columns.forEachIndexed { indexCols, _ ->
@@ -223,8 +223,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun checkWinner(board: Array<Array<String>>): Int? {
-        var countRowsHuman = 0
-        var countRowsAI = 0
+        var countRowsHuman: Int
+        var countRowsAI: Int
         var countLeftDiagonalHuman = 0
         var countLeftDiagonalAI = 0
         var countRightDiagonalHuman = 0
@@ -246,7 +246,7 @@ class GameActivity : AppCompatActivity() {
             else if (countRowsAI == 3 || countLeftDiagonalAI == 3 || countRightDiagonalAI == 3) return STATUS_PLAYER_LOSE
         }
         board.forEach {
-            if (it.find { it == EMPTY_SYMBOL } != null) return null
+            if (it.find { i -> i == EMPTY_SYMBOL } != null) return null
         }
         return STATUS_PLAYER_DRAW
     }
@@ -383,7 +383,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun saveGame(time: Long, gameField: String) {
-        getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit().apply() {
+        getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit().apply {
             putLong(PREF_TIME, time)
             putString(PREF_GAME_FIELD, gameField)
             apply()

@@ -94,7 +94,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun updateSoundValue(volume: Int) {
-        getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit().apply() {
+        getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit().apply {
             putInt(PREF_SOUND_VALUE, volume)
             apply()
         }
@@ -102,7 +102,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun updateLvl(lvl: Int) {
-        getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit().apply() {
+        getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit().apply {
             putInt(PREF_LVL, lvl)
             apply()
         }
@@ -110,7 +110,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun updateRules(rules: Int) {
-        getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit().apply() {
+        getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE).edit().apply {
             putInt(PREF_RULES, rules)
             apply()
         }

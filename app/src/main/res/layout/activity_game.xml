@@ -17,7 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_cross"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        android:contentDescription="@string/close_game" />
 
     <ImageView
         android:id="@+id/toPopupMenu"
@@ -31,7 +32,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_menu"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        android:contentDescription="@string/open_popup_menu" />
 
     <Chronometer
         android:id="@+id/chronometer"
@@ -70,7 +72,8 @@
             android:background="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/ic_cross" />
+            tools:srcCompat="@drawable/ic_cross"
+            android:contentDescription="@string/cell_1_1" />
 
 
         <ImageView
@@ -84,7 +87,8 @@
             app:layout_constraintEnd_toStartOf="@+id/cell_02"
             app:layout_constraintStart_toEndOf="@+id/cell_00"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/ic_cross" />
+            tools:srcCompat="@drawable/ic_cross"
+            android:contentDescription="@string/cell_1_2" />
 
         <ImageView
             android:id="@+id/cell_02"
@@ -95,7 +99,8 @@
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/ic_cross" />
+            tools:srcCompat="@drawable/ic_cross"
+            android:contentDescription="@string/cell_1_3" />
 
         <ImageView
             android:id="@+id/cell_10"
@@ -106,7 +111,8 @@
             android:background="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cell_00"
-            tools:srcCompat="@drawable/ic_cross" />
+            tools:srcCompat="@drawable/ic_cross"
+            android:contentDescription="@string/cell_2_1" />
 
         <ImageView
             android:id="@+id/cell_11"
@@ -119,7 +125,8 @@
             app:layout_constraintEnd_toStartOf="@+id/cell_12"
             app:layout_constraintStart_toEndOf="@+id/cell_10"
             app:layout_constraintTop_toBottomOf="@+id/cell_01"
-            tools:srcCompat="@drawable/ic_cross" />
+            tools:srcCompat="@drawable/ic_cross"
+            android:contentDescription="@string/cell_2_2" />
 
         <ImageView
             android:id="@+id/cell_12"
@@ -130,7 +137,8 @@
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cell_02"
-            tools:srcCompat="@drawable/ic_cross" />
+            tools:srcCompat="@drawable/ic_cross"
+            android:contentDescription="@string/cell_2_3" />
 
         <ImageView
             android:id="@+id/cell_20"
@@ -141,7 +149,8 @@
             android:background="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cell_10"
-            tools:srcCompat="@drawable/ic_cross" />
+            tools:srcCompat="@drawable/ic_cross"
+            android:contentDescription="@string/cell_3_1" />
 
         <ImageView
             android:id="@+id/cell_21"
@@ -154,7 +163,8 @@
             app:layout_constraintEnd_toStartOf="@+id/cell_22"
             app:layout_constraintStart_toEndOf="@+id/cell_20"
             app:layout_constraintTop_toBottomOf="@+id/cell_11"
-            tools:srcCompat="@drawable/ic_cross" />
+            tools:srcCompat="@drawable/ic_cross"
+            android:contentDescription="@string/cell_3_2" />
 
         <ImageView
             android:id="@+id/cell_22"
@@ -165,6 +175,7 @@
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cell_12"
-            tools:srcCompat="@drawable/ic_cross" />
+            tools:srcCompat="@drawable/ic_cross"
+            android:contentDescription="@string/cell_3_3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
